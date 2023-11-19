@@ -1,0 +1,35 @@
+[
+  {
+    "title": "zanahoria",
+    "description": "verdura",
+    "price": "ruta",
+    "thumbnail": true,
+    "status": true,
+    "category": 2,
+    "code": 1,
+    "stock": 506,
+    "id": "0e50aeb9-42a6-4f9d-9423-4d0520b37ded"
+  },
+  {
+    "title": "papa",
+    "description": "verdura",
+    "price": "ruta",
+    "thumbnail": true,
+    "status": true,
+    "code": "verdura",
+    "category": 22,
+    "stock": 230,
+    "id": "e614bb7f-1e45-46a3-a702-ba9b0d9eb771"
+  },
+  {
+    "title": "asdasd",
+    "description": "verdura",
+    "price": 100,
+    "thumbnail": "ruta",
+    "status": true,
+    "category": "verdura",
+    "code": 212,
+    "stock": 23,
+    "id": "9f2ecfbf-ede5-4414-b414-80a5348914e4"
+  }
+]
