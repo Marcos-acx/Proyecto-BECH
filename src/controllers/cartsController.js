@@ -1,6 +1,6 @@
-import { Cart } from "../Cart.js"
-import { CartsManager } from "../CartsManager.js"
-import { ProductManager } from "../ProductManager.js"
+import { Cart } from "../services/Cart.js"
+import { CartsManager } from "../services/CartsManager.js"
+import { ProductManager } from "../services/ProductManager.js"
 
 const cm = new CartsManager()
 export async function postController (req, res) {

@@ -1,5 +1,5 @@
-import { Cart } from "../Cart.js"
-import { CartsManager } from "../CartsManager.js"
+import { Cart } from "../services/Cart.js"
+import { CartsManager } from "../services/CartsManager.js"
 
 
 export function checkInstance(req, res, next) {

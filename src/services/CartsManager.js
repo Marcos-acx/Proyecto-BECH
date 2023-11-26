@@ -1,8 +1,6 @@
 import { randomUUID } from 'crypto'
 import fs from 'fs/promises'
 import { existsSync } from 'fs'
-import { Cart } from './Cart.js'
-import { type } from 'os'
 
 const PATH = './db/carts.json'
 

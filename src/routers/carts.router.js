@@ -5,7 +5,7 @@ import { checkPid } from "../middlewares/products.middleware.js";
 
 const cartsRouter = Router()
 
-cartsRouter.post('/api/carts', checkInstance, postController)
-cartsRouter.post('/api/carts/:cid/product/:pid', checkPid, checkCid, postControllerPid)
+cartsRouter.post('/carts', checkInstance, postController)
+cartsRouter.post('/carts/:cid/product/:pid', checkPid, checkCid, postControllerPid)
 
 export {cartsRouter}

@@ -4,13 +4,13 @@ import { checkInstance } from "../middlewares/products.middleware.js";
 
 const productRouter = Router()
 
-productRouter.get('/api/products', getController)
-productRouter.get('/api/products/:pid', getControllerPid)
+productRouter.get('/products', getController)
+productRouter.get('/products/:pid', getControllerPid)
 
-productRouter.post('/api/products', checkInstance, postController)
-productRouter.post('/api/products/:pid', checkInstance, postControllerPid)
+productRouter.post('/products', checkInstance, postController)
+productRouter.post('/products/:pid', checkInstance, postControllerPid)
 
-productRouter.delete('/api/products/:pid', delController)
+productRouter.delete('/products/:pid', delController)
 
 
 export {productRouter}

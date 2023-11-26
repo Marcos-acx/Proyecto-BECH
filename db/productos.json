@@ -2,7 +2,7 @@
   {
     "title": "zanahoria",
     "description": "verdura",
-    "price": "ruta",
+    "price": 200,
     "thumbnail": true,
     "status": true,
     "category": 2,
@@ -13,7 +13,7 @@
   {
     "title": "papa",
     "description": "verdura",
-    "price": "ruta",
+    "price": 300,
     "thumbnail": true,
     "status": true,
     "code": "verdura",
@@ -22,14 +22,25 @@
     "id": "e614bb7f-1e45-46a3-a702-ba9b0d9eb771"
   },
   {
-    "title": "asdasd",
+    "title": "Marcosss",
     "description": "verdura",
     "price": 100,
     "thumbnail": "ruta",
     "status": true,
     "category": "verdura",
-    "code": 212,
+    "code": 2122,
+    "stock": 46,
+    "id": "04f555b4-8c62-40c9-b940-a789b31405da"
+  },
+  {
+    "title": "aaaaaaa",
+    "description": "fruta",
+    "price": 7800,
+    "thumbnail": "ruta",
+    "status": true,
+    "category": "verdura",
+    "code": 2123322,
     "stock": 23,
-    "id": "9f2ecfbf-ede5-4414-b414-80a5348914e4"
+    "id": "6aee4acd-9d2b-4b4a-a11b-89d86b56158d"
   }
 ]

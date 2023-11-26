@@ -1,6 +1,5 @@
 import { existsSync } from "fs"
 import fs from "fs/promises"
-import { Product } from './Product.js'
 import { randomUUID } from "crypto"
 
 export class ProductManager {

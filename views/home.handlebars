@@ -1,0 +1,11 @@
+{{>navbar}}
+<h2>Productos</h2>
+{{#if hayProductos}}
+<ul>
+    {{#each products}}
+    <li>{{this.title}} ({{this.price}})</li>
+    {{/each}}
+</ul>
+{{else}}
+<p>No hay productos disponibles para mostrar</p>
+{{/if}}

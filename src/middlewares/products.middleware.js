@@ -1,5 +1,5 @@
-import { Product } from "../Product.js";
-import { ProductManager } from "../ProductManager.js";
+import { Product } from "../services/Product.js";
+import { ProductManager } from "../services/ProductManager.js";
 
 export function checkInstance(req, res, next) {
     const product = req.body
