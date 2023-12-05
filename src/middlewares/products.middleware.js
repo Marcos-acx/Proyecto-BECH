@@ -1,27 +1,9 @@
-import { Product } from "../services/Product.js";
-import { ProductManager } from "../services/ProductManager.js";
+import { ProductManager } from "../Dao/models/mongodb.js";
 
-export function checkInstance(req, res, next) {
-    const product = req.body
-
-    const atributosEsperados = ['title', 'description', 'price', 'thumbnail',
-            'status', 'category', 'code', 'stock', "id"
-        ]
-    const tieneMismosAtributos = atributosEsperados.every(attr => attr in product)
-    if (tieneMismosAtributos) {
-        next()
-    } else {
-        res.status(400).json({
-            message: 'Datos del producto incompletos o incorrectos.'
-        })
-    }
-}
-
-export function checkPid(req, res, next) {
-    const pid = Number(req.params.pid)
-    const pm = new ProductManager('./db/productos.json')
+export async function checkPid(req, res, next) {
+    const pid = req.params.pid
     try {
-        pm.getProductById(pid)
+        await ProductManager.findById(pid)
     } catch (error) {
         res.status(404).json({
             message: 'No se ha encontrado un producto con ese id.'

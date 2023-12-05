@@ -1,12 +1,9 @@
-import { Product } from "../services/Product.js"
-import { ProductManager } from "../services/ProductManager.js"
+import { ProductManager } from "../Dao/models/mongodb.js"
 import { websocketServer } from "../main.js"
-
-const pm = new ProductManager('./db/productos.json')
 
 export async function getController(req, res) {
     const limit = Number(req.query.limit)
-    const products = await pm.getProducts(limit)
+    const products = await ProductManager.find().limit(limit)
     if (!products.length) {
         res.send("<h1>No hay productos disponibles en este momento.</h1>")
     } else {
@@ -15,9 +12,9 @@ export async function getController(req, res) {
 }
 
 export async function getControllerPid(req, res) {
-    const pid = Number(req.params.pid)
+    const pid = req.params.pid
     try {
-        const searchedProd = await pm.getProductById(pid)
+        const searchedProd = await ProductManager.findById(pid)
         res.json(searchedProd)
     } catch (error) {
         res.status(404).json({
@@ -27,28 +24,26 @@ export async function getControllerPid(req, res) {
 }
 
 export async function postController(req, res) {
-    const product = new Product(
-        req.body.id,
-        req.body.title,
-        req.body.description,
-        req.body.thumbnail,
-        req.body.price,
-        req.body.category,
-        req.body.code,
-        req.body.stock
-    )
-    await pm.addProduct(product)
-    websocketServer.emit('updateProducts', await pm.getProducts())
-    res.status(200).json({
+    let product
+    try {
+        product = await ProductManager.create(req.body)
+    } catch (error) {
+        return res.status(400).json({
+            message: error.message
+        })
+    }
+    websocketServer.emit('updateProducts', await ProductManager.find())
+    res.status(201).json({
         message: 'Producto agregado correctamente.',
+        product
     })
 }
 
 export async function postControllerPid(req, res) {
     const product = req.body
-    const existingProduct = await pm.updateProduct(product)
+    const existingProduct = await ProductManager.findByIdAndUpdate(product)
      if (existingProduct) {
-        websocketServer.emit('updateProducts', await pm.getProducts())
+        websocketServer.emit('updateProducts', await ProductManager.find())
         res.status(200).json({
             message: 'Producto actualizado correctamente.'
         })
@@ -61,10 +56,9 @@ export async function postControllerPid(req, res) {
 
 export async function delController(req, res) {
     const pid = req.params.pid
-    const products = await pm.getProducts()
-    if (products.some(prod => prod.id === pid)) {
-        await pm.deleteProduct(pid)
-        websocketServer.emit('updateProducts', await pm.getProducts())
+    if (ProductManager.findById(pid)) {
+        await ProductManager.deleteOne({_id: pid})
+        websocketServer.emit('updateProducts', await ProductManager.find())
         res.status(200).json({
             message: `Producto ${pid} eliminado correctamente`
         })

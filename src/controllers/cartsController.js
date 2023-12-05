@@ -1,35 +1,21 @@
-import { Cart } from "../services/Cart.js"
-import { CartsManager } from "../services/CartsManager.js"
-import { ProductManager } from "../services/ProductManager.js"
+import { CartsManager } from "../Dao/models/mongodb.js"
 
-const cm = new CartsManager()
 export async function postController (req, res) {
-    const cart = new Cart(req.body.products, req.body.id)
-    const cartAdded = await cm.addCart(cart)
-    if (cartAdded) {
-        res.status(200).json({
-            message: 'Carrito agregado correctamente.'
-        })
-    } else {
-        res.json({
-            message: 'Error al agregar el carrito.'
-        })
+    let cart
+    try {
+        cart = await CartsManager.create(req.body)
+    } catch (error) {
+        res.status(400).json({message: error.message})
     }
+    res.status(201).json({message: 'Carrito creado correctamente', cart})
 }
 
 export async function postControllerPid (req, res) {
-    const pm = new ProductManager('./db/productos.json')
-    const searchedCart = await cm.getCartByCid(req.params.cid)
-    const cart = new Cart(searchedCart.products, searchedCart.id)
-    const searchedProd = await pm.getProductById(Number(req.params.pid))
-
     const product = {
-        'product': searchedProd.id,
+        'product': req.params.pid,
         'quantity': req.body.quantity
     }
-    console.log(searchedCart);
-    cart.addProduct(product)
-    await cm.updateCart(cart)
+    CartsManager.updateOne({ _id: req.params.cid }, { $push: { products: product } })
 
     res.status(200).json({
         message: 'Se ha agregado el producto exitosamente.'

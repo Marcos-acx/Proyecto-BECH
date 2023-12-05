@@ -1,19 +1,15 @@
 import express from "express";
 import { Router } from "express";
-import { ProductManager } from "../services/ProductManager.js";
+import { ProductManager } from "../Dao/models/mongodb.js"
 
 export const webRouter = Router()
 
 webRouter.use('/static', express.static('static'))
 
-const pm = new ProductManager('./db/productos.json')
-
-const products = await pm.getProducts()
-
 webRouter.get('/', (req, res) => {
     res.render('home.handlebars', {
         titulo: 'Home',
-        hayProductos: products.length > 0,
+        hayProductos: ProductManager.countDocuments() > 0,
         products
     })
 })

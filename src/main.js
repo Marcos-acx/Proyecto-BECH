@@ -3,12 +3,11 @@ import handlebars from 'express-handlebars'
 import { apiRouter } from './routers/api.router.js'
 import { Server } from 'socket.io'
 import { webRouter } from './routers/web.router.js'
-import { ProductManager } from './services/ProductManager.js'
+import { ProductManager } from './Dao/models/mongodb.js'
+import { PORT } from './config.js'
 
-const PORT = 8080
 const app = express()
-const pm = new ProductManager('./db/productos.json')
-const products = await pm.getProducts()
+const products = ProductManager.find()
 
 app.engine('handlebars', handlebars.engine())
 
@@ -24,6 +23,7 @@ websocketServer.on('connection', async (socket) => {
 
 app.set('views', './views')
 
+app.use(express.urlencoded({ extended: true }))
 app.use('/static', express.static('../static'))
 app.use(express.json())
 app.use(apiRouter)
