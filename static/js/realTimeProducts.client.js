@@ -1,6 +1,6 @@
 const updatedProducts = document.getElementById('ulProducts')
 
-const socket = io('http://192.168.1.80:25565',{transports: ['websocket']})
+const socket = io({transports: ['websocket']})
 
 if (updatedProducts) {
     socket.on('updateProducts',  async (products) => {
