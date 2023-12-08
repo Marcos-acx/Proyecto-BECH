@@ -1,5 +1,12 @@
+body {
+    height: 100%;
+    background-color: rgb(66, 66, 66);
+    color: white;
+}
+
 nav {
     width: 100%;
+    color: white;
 }
 nav ul {
     display: flex;
@@ -13,4 +20,27 @@ ul li {
 }
 h1 {
     color: azure;
+}
+
+a {
+    color: white;
+}
+
+#messages {
+    width: 50%;
+}
+
+p.my-message {
+    max-width: 70%;
+    text-align: right;
+    position: relative;
+    right: -30%;
+    word-wrap: break-word;
+}
+p.others-message {
+    max-width: 70%;
+    text-align: left;
+    position: relative;
+    left: 0;
+    word-wrap: break-word;
 }

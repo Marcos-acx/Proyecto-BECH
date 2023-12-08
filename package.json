@@ -6,7 +6,7 @@
   "main": "./src/main.js",
   "scripts": {
     "start": "node .",
-    "dev": "nodemon -e js,handlebars,html .",
+    "dev": "nodemon -e js,handlebars,html,css .",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
@@ -20,6 +20,7 @@
     "mongoose": "^8.0.2",
     "multer": "^1.4.5-lts.1",
     "socket.io": "^4.7.2",
+    "sweetalert2": "^11.10.1",
     "uuid": "^9.0.1",
     "uuidv4": "^6.2.13"
   }
