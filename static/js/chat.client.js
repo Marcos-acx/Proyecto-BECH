@@ -21,7 +21,6 @@ function startChat (user) {
 
     
     socket.on('newUser', newUser => {
-        console.log(newUser);
         Swal.fire({
             text: 'Nuevo usuario: ' + newUser,
             toast: true,
@@ -47,9 +46,7 @@ function startChat (user) {
 
     
     socket.on('messages', messages => {
-        console.log(messages);
         const divMessages = document.querySelector('#messages')
-        
         divMessages.innerHTML = ``
         
         for (const message of messages) {

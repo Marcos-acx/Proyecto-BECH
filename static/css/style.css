@@ -27,20 +27,38 @@ a {
 }
 
 #messages {
+    margin-inline: auto;
+    padding: 10px;
     width: 50%;
+    border: 1px solid black;
+    display: flex;
+    flex-direction: column;
 }
 
-p.my-message {
+#messages p {
+    border-radius: 3px;
+    padding: 5px;
     max-width: 70%;
-    text-align: right;
     position: relative;
-    right: -30%;
     word-wrap: break-word;
+    width: fit-content;
+}
+p.my-message {
+    align-self: self-end;
+    text-align: right;
+    right: 0%;
+    background-color: rgb(0, 153, 255);
 }
 p.others-message {
-    max-width: 70%;
+    align-self: self-start;
     text-align: left;
-    position: relative;
-    left: 0;
-    word-wrap: break-word;
+    left: 0%;
+    background-color: rgb(78, 78, 78);
+}
+
+#chat-form {
+    width: 50%;
+    margin-inline: auto;
+    display: flex;
+    justify-content: center;
 }
