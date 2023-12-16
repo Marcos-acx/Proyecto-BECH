@@ -3,7 +3,7 @@ import handlebars from 'express-handlebars'
 import { apiRouter } from './routers/api.router.js'
 import { Server } from 'socket.io'
 import { webRouter } from './routers/web.router.js'
-import { MessageManager, ProductManager } from './Dao/models/mongodb.js'
+import { CartsManager, MessageManager, ProductManager } from './Dao/models/mongodb.js'
 import { PORT } from './config.js'
 
 const app = express()
@@ -27,6 +27,18 @@ websocketServer.on('connection', async (socket) => {
             user: socket.handshake.auth.user
         })
         websocketServer.emit('messages', await MessageManager.find().lean())
+    })
+
+    socket.on('añadirCarrito', async (id) => {
+        const product = await ProductManager.findById(id)
+        let result
+        try {
+            result = await CartsManager.create({products: [{product: product, quantity: 1}]})
+        } catch (error) {
+            console.log(error);
+            return error
+        }
+        console.log(result);
     })
 
     socket.on('disconnect', () => {

@@ -5,7 +5,7 @@ const cartSchema = new Schema({
     _id: { type: String, default: randomUUID() },
     products: {
         type: [{
-            product: { type: String, required: true },
+            product: { type: String, required: true, ref: 'products' },
             quantity: { type: Number, integer: true, default: 1 }
         }], default: []}
 }, {

@@ -1,0 +1,28 @@
+<link rel="stylesheet" href="/static/css/style.css">
+{{>navbar}}
+{{#if hayProductos}}
+<ul>
+    {{#each products}}
+    <li>
+        <p>
+        title: {{this.product.title}}
+        </p>
+            
+        <p>
+        price: {{this.product.price}}
+        </p>
+            
+        <p>
+        category: {{this.product.category}}
+        </p>
+            
+        <p>
+        stock: {{this.product.stock}}
+        </p>
+            
+    </li>
+    {{/each}}
+</ul>
+{{else}}
+<h2>No hay productos que mostrar.</h2>
+{{/if}}

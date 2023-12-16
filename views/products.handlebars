@@ -1,0 +1,20 @@
+<link rel="stylesheet" href="/static/css/style.css">
+<script src="/socket.io/socket.io.js"></script>
+{{>navbar}}
+{{#if hayProductos}}
+<ul>
+    {{#each docs}}
+    <li>
+        title: {{this.title}}
+        price: {{this.price}}
+        <button id="añadirCarrito" onclick="añadirCarrito('{{this.id}}')">Añadir al carrito</button>
+    </li>
+    {{/each}}
+</ul>
+{{else}}
+<h2>No hay productos que mostrar.</h2>
+{{/if}}
+<a {{#if hasPrevPage}} href={{prevLink}} {{/if}}>Página anterior</a>
+<p>{{page}}</p>
+<a {{#if hasNextPage}} href={{nextLink}} {{/if}}>Siguiente página</a>
+<script src="/static/js/product.client.js"></script>

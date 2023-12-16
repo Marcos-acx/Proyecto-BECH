@@ -2,13 +2,43 @@ import { ProductManager } from "../Dao/models/mongodb.js"
 import { websocketServer } from "../main.js"
 
 export async function getController(req, res) {
-    const limit = Number(req.query.limit)
-    const products = await ProductManager.find().limit(limit)
-    if (!products.length) {
-        res.send("<h1>No hay productos disponibles en este momento.</h1>")
-    } else {
-        res.json(products)
+    const query = {}
+    const sort = {}
+
+    if (req.query.sort == 'asc') {
+        sort.price = 1
+    } else if (req.query.sort == 'desc') {
+        sort.price = -1
     }
+
+    const page = {
+        limit: req.query.limit || 10,
+        page: req.query.page || 1,
+        lean: true 
+    }
+
+    let urlQueryFragment = []
+    const allowedQuery = ['category', 'stock']
+    allowedQuery.forEach(queryKey => {
+        if (allowedQuery[queryKey] !== undefined && req.query[queryKey] !== null) {
+            query[queryKey] = req.query[queryKey]
+            urlQueryFragment.push(`${queryKey}=${req.query[queryKey]}`)
+        }
+    })
+
+    const result = await ProductManager.paginate(query, page, sort)
+    
+    res.render('products.handlebars', {
+        title: 'Productos',
+        hayProductos: result.docs.length > 0,
+        ... result,
+        prevLink: result.hasPrevPage 
+            ? `/api/products?limit=${page.limit}&page=${this.prevPage}&${urlQueryFragment.join('&')}` 
+            : null,
+        nextLink: result.hasNextPage 
+            ? `/api/products?limit=${page.limit}&page=${this.nextPage}&${urlQueryFragment.join('&')}` 
+            : null
+    })
 }
 
 export async function getControllerPid(req, res) {
