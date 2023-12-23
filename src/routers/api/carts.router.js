@@ -8,8 +8,8 @@ import {
     postControllerPid, 
     putController, 
     putControllerPid
-} from '../controllers/cartsController.js';
-import {checkPid} from '../middlewares/products.middleware.js';
+} from '../../controllers/cartsController.js';
+import {checkPid} from '../../middlewares/products.middleware.js';
 
 export const cartsRouter = Router()
 

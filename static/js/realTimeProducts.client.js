@@ -15,6 +15,6 @@ function listarProductos (products) {
     }
 }
 
-if (updatedProducts) {
+if (updatedProducts) { 
     socket.on('updateProducts', listarProductos)
 }

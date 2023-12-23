@@ -6,3 +6,4 @@ await mongoose.connect(MONGODB_CNX_STRING)
 export { manager as ProductManager } from './Product.js'
 export { manager as CartsManager } from './Cart.js'
 export { manager as MessageManager } from './Messages.js'
+export { manager as UserManager } from './User.js'

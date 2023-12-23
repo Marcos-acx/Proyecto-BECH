@@ -1,10 +1,11 @@
 import express from 'express'
 import handlebars from 'express-handlebars'
-import { apiRouter } from './routers/api.router.js'
+import { apiRouter } from './routers/api/api.router.js'
 import { Server } from 'socket.io'
-import { webRouter } from './routers/web.router.js'
+import { webRouter } from './routers/web/web.router.js'
 import { CartsManager, MessageManager, ProductManager } from './Dao/models/mongodb.js'
 import { PORT } from './config.js'
+import { sessions } from './middlewares/sessions.js'
 
 const app = express()
 const products = await ProductManager.find().lean()
@@ -51,5 +52,8 @@ app.set('views', './views')
 app.use(express.urlencoded({ extended: true }))
 app.use('/static', express.static('../static'))
 app.use(express.json())
+
+app.use(sessions)
+
 app.use(apiRouter)
 app.use(webRouter)

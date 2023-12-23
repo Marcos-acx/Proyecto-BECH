@@ -1,6 +1,7 @@
 import express from "express";
 import { Router } from "express";
-import { ProductManager } from "../Dao/models/mongodb.js"
+import { ProductManager, UserManager } from "../../Dao/models/mongodb.js"
+import { onlyLogued } from '../../middlewares/authorization.js'
 
 export const webRouter = Router()
 
@@ -10,7 +11,8 @@ webRouter.get('/', async (req, res) => {
     res.render('home.handlebars', {
         titulo: 'Home',
         hayProductos: await ProductManager.countDocuments() > 0,
-        products: await ProductManager.find().lean()
+        products: await ProductManager.find().lean(),
+        ...req.session['user']
     })
 })
 
@@ -26,3 +28,18 @@ webRouter.get('/chat', (req, res) => {
     })
 })
 
+
+webRouter.get('/register', (req, res) => {
+    res.render('register.handlebars', { title: 'Register'})
+})
+
+webRouter.get('/login', (req, res) => {
+    res.render('login.handlebars', { title: 'Login'})
+})
+
+webRouter.get('/profile', onlyLogued, (req, res) => {
+    res.render('profile.handlebars', {
+        title: 'Profile',
+        ...req.session['user']
+    })
+})
