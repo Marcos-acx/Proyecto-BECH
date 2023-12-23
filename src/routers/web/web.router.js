@@ -8,12 +8,16 @@ export const webRouter = Router()
 webRouter.use('/static', express.static('static'))
 
 webRouter.get('/', async (req, res) => {
-    res.render('home.handlebars', {
-        titulo: 'Home',
-        hayProductos: await ProductManager.countDocuments() > 0,
-        products: await ProductManager.find().lean(),
-        ...req.session['user']
-    })
+    if (req.session['user']) {
+        res.render('home.handlebars', {
+            titulo: 'Home',
+            hayProductos: await ProductManager.countDocuments() > 0,
+            products: await ProductManager.find().lean(),
+            ...req.session['user']
+        })
+    } else {
+        res.redirect('/login')
+    }
 })
 
 webRouter.get('/realtimeproducts', (req, res) => {
