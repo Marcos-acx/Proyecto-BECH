@@ -6,6 +6,7 @@ import { webRouter } from './routers/web/web.router.js'
 import { CartsManager, MessageManager, ProductManager } from './Dao/models/mongodb.js'
 import { PORT } from './config.js'
 import { sessions } from './middlewares/sessions.js'
+import { passportInitialize, passportSession } from './middlewares/authentications.js'
 
 const app = express()
 const products = await ProductManager.find().lean()
@@ -54,6 +55,7 @@ app.use('/static', express.static('../static'))
 app.use(express.json())
 
 app.use(sessions)
+app.use(passportInitialize, passportSession)
 
 app.use(apiRouter)
 app.use(webRouter)

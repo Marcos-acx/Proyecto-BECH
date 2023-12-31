@@ -1,19 +1,20 @@
 import express from "express";
 import { Router } from "express";
-import { ProductManager, UserManager } from "../../Dao/models/mongodb.js"
+import { ProductManager } from "../../Dao/models/mongodb.js"
 import { onlyLogued } from '../../middlewares/authorization.js'
+import passport from "passport";
 
 export const webRouter = Router()
 
 webRouter.use('/static', express.static('static'))
 
 webRouter.get('/', async (req, res) => {
-    if (req.session['user']) {
+    if (req.user) {
         res.render('home.handlebars', {
             titulo: 'Home',
             hayProductos: await ProductManager.countDocuments() > 0,
             products: await ProductManager.find().lean(),
-            ...req.session['user']
+            ...req.user
         })
     } else {
         res.redirect('/login')
@@ -41,9 +42,20 @@ webRouter.get('/login', (req, res) => {
     res.render('login.handlebars', { title: 'Login'})
 })
 
+webRouter.get('/githublogin', passport.authenticate('loginGithub'))
+
+webRouter.get('/githubcallback', passport.authenticate('loginGithub', {
+    successRedirect: '/profile',
+    failureRedirect: '/login'
+}))
+
 webRouter.get('/profile', onlyLogued, (req, res) => {
     res.render('profile.handlebars', {
         title: 'Profile',
-        ...req.session['user']
+        ...req.user
     })
+})
+
+webRouter.get('/edit', (req, res) => {
+    res.render('edit.handlebars'), { title: 'Editar datos' }
 })

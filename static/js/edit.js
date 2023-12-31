@@ -1,17 +1,17 @@
-const formRegister = document.querySelector('form')
+const formEditData = document.querySelector('form')
 
-formRegister?.addEventListener('submit', async e => {
+formEditData?.addEventListener('submit', async e => {
     e.preventDefault()
 
     const response = await fetch('/api/users', {
-        method: 'POST',
+        method: 'PUT',
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded'
         },
-        body: new URLSearchParams(new FormData(formRegister))
+        body: new URLSearchParams(new FormData(formEditData))
     })
 
-    if (response.status === 201) {
+    if (response.status === 200) {
         const { payload: user } = await response.json()
         alert(JSON.stringify(user))
         window.location.href = '/profile'

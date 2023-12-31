@@ -1,28 +1,19 @@
 import { Router } from "express";
 import { UserManager } from "../../Dao/models/mongodb.js";
-import { ADMIN_EMAIL } from "../../config.js";
+import passport from "passport";
 
 export const sessionsRouter = Router()
 
-sessionsRouter.post('/sessions', async (req, res) => {
-    const user = await UserManager.findOne(req.body)
-    if (!user) {
-        return res.status(401).json({ status: 'error', message: 'login failed' })
-    } else {
-        req.session['user'] = {
-            nombre: user.nombre,
-            apellido: user.apellido,
-            email: user.email,
-        }
-
-        if (user.email === ADMIN_EMAIL) {
-            req.session['user'].rol = 'admin'
-        } else {
-            req.session['user'].rol = 'user'
-        }
+sessionsRouter.post('/sessions', 
+    passport.authenticate('loginLocal', {
+        failWithError: true
+    }), 
+    async (req, res, next) => {
+        res.status(201).json({status: 'success', payload: req.user})
+    }, (error, req, res, next) => {
+        res.status(401).json({status: 'error', message: error.message})
     }
-    res.status(201).json({status: 'success', pauload: req.session['user']})
-})
+)
 
 sessionsRouter.delete('/sessions/current', async (req, res) => {
     req.session.destroy(err => {
